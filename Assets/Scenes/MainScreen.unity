@@ -168,7 +168,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coin: 1000
+  itP1: 0
+  itP2: 0
+  itP3: 0
+  itP4: 0
+  itP5: 0
+  itP6: 0
   Oxygen: 120
+  SaveOx: 0
+  time: 0
+  chestopend: 0
 --- !u!1 &86842446
 GameObject:
   m_ObjectHideFlags: 0
@@ -1535,12 +1544,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shop: {fileID: 1196350248}
   COIN: {fileID: 1470076888}
-  itPurchase1: 0
-  itPurchase2: 0
-  itPurchase3: 0
-  itPurchase4: 0
-  itPurchase5: 0
-  itPurchase6: 0
   Item1: {fileID: 905746011}
   Item2: {fileID: 1281655387}
   Item3: {fileID: 566637893}

@@ -23,13 +23,16 @@ public class ShopControll : MonoBehaviour
     {
         Shop.SetActive(false);
         COIN.text = "COIN : " + GameManager.instance.coin;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        
     }
+
+
 
     public void StartGame()
     {
@@ -71,6 +74,7 @@ public class ShopControll : MonoBehaviour
             GameManager.instance.coin -= 20;
             COIN.text = "COIN : " + GameManager.instance.coin;
             GameManager.instance.Oxygen = 180;
+            GameManager.instance.SaveOx = 180;
             Debug.Log("상품을 구매하였습니다.");
         }
 
@@ -101,6 +105,7 @@ public class ShopControll : MonoBehaviour
             GameManager.instance.coin -= 40;
             COIN.text = "COIN : " + GameManager.instance.coin;
             GameManager.instance.Oxygen = 240;
+            GameManager.instance.SaveOx = 240;
             Debug.Log("상품을 구매하였습니다.");
         }
 
@@ -127,6 +132,7 @@ public class ShopControll : MonoBehaviour
             GameManager.instance.coin -= 80;
             COIN.text = "COIN : " + GameManager.instance.coin;
             GameManager.instance.Oxygen = 320;
+            GameManager.instance.SaveOx = 320;
             Debug.Log("상품을 구매하였습니다.");
         }
 

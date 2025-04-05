@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,6 +10,7 @@ public class GameManager : MonoBehaviour
 
     // 상점 변수
     public int coin;
+    public int Price;
 
     public bool itP1 = false;
     public bool itP2 = false;
@@ -19,31 +22,21 @@ public class GameManager : MonoBehaviour
 
     // 게임플레이 변수
     public float Oxygen = 120;
+    public float SaveOx;
 
     public float time;
 
+    public bool chestopend = false;
+
     // 인벤토리 변수
-    public bool itIn1 = false;
-    public bool itIn2 = false;
-    public bool itIn3 = false;
-    public bool itIn4 = false;
 
-    public bool itIn5 = false;
-    public bool itIn6 = false;
+    public List<GameObject> Item;
 
-    public bool itIn7 = false;
-    public bool itIn8 = false;
 
-    public GameObject ITEM1;
-    public GameObject ITEM2;
-    public GameObject ITEM3;
-    public GameObject ITEM4;
 
-    public GameObject ITEM5;
-    public GameObject ITEM6;
 
-    public GameObject ITEM7;
-    public GameObject ITEM8;
+
+
 
 
 
@@ -61,14 +54,20 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        SaveOx = Oxygen;
     }
 
     // Update is called once per frame
     void Update()
     {
-        time += Time.deltaTime;
-        
-        
+        if(SceneManager.GetActiveScene().name == "MainMap")
+        {
+            time += Time.deltaTime;
+        }
+
+        if (SceneManager.GetActiveScene().name == "MainScreen")
+        {
+            
+        }
     }
 }

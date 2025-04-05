@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.Burst.CompilerServices;
+using UnityEditorInternal.VersionControl;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +14,8 @@ public class PL_Controller : MonoBehaviour
 
     // GAMEOVER
     public GameObject gameOver;
+    public Text Totaltime;
+    public Text Rank;
 
     // 애니메이션 변수
     [Header("Animation")]
@@ -53,16 +57,18 @@ public class PL_Controller : MonoBehaviour
     private float curtime;
     public float cooltime = 0.5f;
 
+    // 수류탄
+    [Header("Grenade")]
+    [SerializeField] public GameObject GrenadePrefab;
+    [SerializeField] public float shootSpd = 10f;
+
 
     // 인벤토리
     [Header("Inventory")]
     [SerializeField] public GameObject inventory;
     [SerializeField] public Transform itemCheck;
     [SerializeField] public Vector2 itemCheckSize = new Vector2 (1.5f, 1f);
- 
-    
-    
-    
+
 
 
 
@@ -72,9 +78,11 @@ public class PL_Controller : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         thisOxy = GameManager.instance.Oxygen;
+        GameManager.instance.Oxygen = GameManager.instance.SaveOx;
         attackObj.SetActive(false);
         gameOver.SetActive(false);
         inventory.SetActive(false);
+
     }
 
     // Update is called once per frame
@@ -182,19 +190,32 @@ public class PL_Controller : MonoBehaviour
                 }
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.G)) {
+            GameObject grenade = Instantiate(GrenadePrefab, transform.position, Quaternion.identity);
+            Rigidbody2D grenadeRb = grenade.GetComponent<Rigidbody2D>();
+
+            if (grenadeRb != null)
+            {
+                if((Vector2)transform.localScale == new Vector2(1, 1))
+                {
+                    grenade.transform.rotation = Quaternion.Euler(0, 0, 45);
+                    grenadeRb.velocity = new Vector2(5f, 7f);
+                }
+                if((Vector2)transform.localScale == new Vector2(-1, 1))
+                {
+                    grenade.transform.rotation = Quaternion.Euler(0, 0, 135);
+                    grenadeRb.velocity = new Vector2(-5f, 7f);
+                }
+                
+            }
+        }
     }
 
     // 인벤토리
     void Inventory()
     {
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            inventory.SetActive(true);
-        }
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            inventory.SetActive(false);
-        }
+        
 
         Collider2D[] checkCol = Physics2D.OverlapBoxAll(itemCheck.position, itemCheckSize, 0f);
         foreach (var itemCol in checkCol)
@@ -203,12 +224,18 @@ public class PL_Controller : MonoBehaviour
             {
                 if(Input.GetKeyDown(KeyCode.E))
                 {
-                    if(GameManager.instance.ITEM1 == null)
-                    {
-                        GameManager.instance.ITEM1 = itemCol.gameObject;
-                    }
+
                 }
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            inventory.SetActive(true);
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            inventory.SetActive(false);
         }
 
     }
@@ -230,6 +257,11 @@ public class PL_Controller : MonoBehaviour
     void GameOver()
     {
         gameOver.SetActive(true);
+        int timeM = (int)GameManager.instance.time / 60;
+        int timeS = (int)GameManager.instance.time % 60;
+        Totaltime.text = "TotalTime : " + timeM.ToString("D2") + ":" + timeS.ToString("D2");
+        Rank.text = "Rank : ".ToString();
+
         Destroy(gameObject, 1f);
     }
 
