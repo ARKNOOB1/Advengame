@@ -95,7 +95,7 @@ public class PL_Controller : MonoBehaviour
         Move();
         Jump();
         Attack();
-        Inventory();
+        PlInventory();
     }
 
     void Timer()
@@ -213,21 +213,23 @@ public class PL_Controller : MonoBehaviour
     }
 
     // 인벤토리
-    void Inventory()
+    void PlInventory()
     {
-        
-
-        Collider2D[] checkCol = Physics2D.OverlapBoxAll(itemCheck.position, itemCheckSize, 0f);
-        foreach (var itemCol in checkCol)
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            if (itemCol.tag == "item")
+            Collider2D[] checkCol = Physics2D.OverlapBoxAll(itemCheck.position, itemCheckSize, 0f);
+            foreach (var itemCol in checkCol)
             {
-                if(Input.GetKeyDown(KeyCode.E))
+                if (itemCol.tag == "item")
                 {
-
+                    ItemData itemData = itemCol.GetComponent<ItemObject>().itemData;
+                    Inventory.Instance.AddItem(itemData);
+                    Destroy(itemCol.gameObject);
                 }
             }
         }
+
+        
 
         if (Input.GetKeyDown(KeyCode.I))
         {
@@ -281,8 +283,10 @@ public class PL_Controller : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(groundCheck.position, groundCheckSize);
         Gizmos.DrawWireCube(attackCheck.position, attackCheckSize);
+        Gizmos.color = Color.red;
         Gizmos.DrawWireCube(itemCheck.position, itemCheckSize);
     }
+    
 
     private void Animation()
     {

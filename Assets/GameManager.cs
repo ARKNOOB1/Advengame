@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
 
     public List<GameObject> Item;
 
-
+    public int bagIndex = 0;
 
 
 

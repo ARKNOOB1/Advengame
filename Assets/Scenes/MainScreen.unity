@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 51157050}
   - component: {fileID: 51157051}
+  - component: {fileID: 51157052}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -168,6 +169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coin: 1000
+  Price: 0
   itP1: 0
   itP2: 0
   itP3: 0
@@ -178,6 +180,21 @@ MonoBehaviour:
   SaveOx: 0
   time: 0
   chestopend: 0
+  Item: []
+  bagIndex: 0
+--- !u!114 &51157052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 51157049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80b87c17aee397b48b83c973d66beef6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: []
 --- !u!1 &86842446
 GameObject:
   m_ObjectHideFlags: 0
