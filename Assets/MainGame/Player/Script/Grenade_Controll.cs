@@ -7,6 +7,8 @@ public class Grenade_Controll : MonoBehaviour
 {
     Rigidbody2D rb;
 
+    public ParticleSystem Explosive;
+
     public Transform ExplosivePosition;
     public Vector2 ExplosiveRange = new Vector2(5f, 5f);
 
@@ -16,7 +18,7 @@ public class Grenade_Controll : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        Destroy(gameObject, 3.1f);
+        Destroy(gameObject, 3.5f);
     }
 
     // Update is called once per frame
@@ -29,6 +31,8 @@ public class Grenade_Controll : MonoBehaviour
         }
         if(curtime <= 0)
         {
+            SpriteRenderer grenade = GetComponent<SpriteRenderer>();
+            grenade.color = new Color(1, 1, 1, 0);
             Collider2D[] Excol = Physics2D.OverlapBoxAll(ExplosivePosition.position, ExplosiveRange, 0f);
             foreach(Collider2D Entity in Excol)
             {
@@ -44,7 +48,9 @@ public class Grenade_Controll : MonoBehaviour
                 {
                     Entity.GetComponent<Fixed_Enemy>().FE_Dameged(5);
                 }
+                rb.velocity = Vector2.zero;
             }
+            curtime = 3f;
         }
     }
 

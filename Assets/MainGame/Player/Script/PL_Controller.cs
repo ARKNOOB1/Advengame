@@ -11,6 +11,7 @@ public class PL_Controller : MonoBehaviour
     Rigidbody2D rb;
 
     public Text timer;
+    public GameObject flash;
 
     // GAMEOVER
     public GameObject gameOver;
@@ -51,7 +52,6 @@ public class PL_Controller : MonoBehaviour
 
     // 공격 변수
     [Header("Attack")]
-    [SerializeField] public GameObject attackObj;
     [SerializeField] public Transform attackCheck;
     [SerializeField] public Vector2 attackCheckSize = new Vector2(2f, 1f);
     private float curtime;
@@ -79,7 +79,6 @@ public class PL_Controller : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         thisOxy = GameManager.instance.Oxygen;
         GameManager.instance.Oxygen = GameManager.instance.SaveOx;
-        attackObj.SetActive(false);
         gameOver.SetActive(false);
         inventory.SetActive(false);
 
@@ -95,6 +94,7 @@ public class PL_Controller : MonoBehaviour
         Move();
         Jump();
         Attack();
+        FlashLight();
         PlInventory();
     }
 
@@ -166,7 +166,7 @@ public class PL_Controller : MonoBehaviour
             curtime -= Time.deltaTime;
         }
 
-        if (Input.GetKeyDown(KeyCode.F)) {
+        if (Input.GetMouseButtonDown(0)) {
             if(curtime <= 0)
             {
                 Collider2D[] ATcol = Physics2D.OverlapBoxAll(attackCheck.position, attackCheckSize, 0f);
@@ -181,33 +181,36 @@ public class PL_Controller : MonoBehaviour
                         col.GetComponent<Fixed_Enemy>().FE_Dameged(1);
                     }
                 }
-                attackObj.SetActive(true);
                 curtime = cooltime;
-                Invoke("InvokeAt", 0.5f);
                 if (Atani != null)
                 {
-                    Atani.SetTrigger("Attack");
+                    Atani.SetTrigger("atk");
                 }
             }
         }
 
         if (Input.GetKeyDown(KeyCode.G)) {
+            if(GameManager.instance.grCount <= 0)
+            {
+                return;
+            }
+            GameManager.instance.grCount--;
             GameObject grenade = Instantiate(GrenadePrefab, transform.position, Quaternion.identity);
             Rigidbody2D grenadeRb = grenade.GetComponent<Rigidbody2D>();
 
             if (grenadeRb != null)
             {
-                if((Vector2)transform.localScale == new Vector2(1, 1))
+                if ((Vector2)transform.localScale == new Vector2(1, 1))
                 {
                     grenade.transform.rotation = Quaternion.Euler(0, 0, 45);
                     grenadeRb.velocity = new Vector2(5f, 7f);
                 }
-                if((Vector2)transform.localScale == new Vector2(-1, 1))
+                if ((Vector2)transform.localScale == new Vector2(-1, 1))
                 {
                     grenade.transform.rotation = Quaternion.Euler(0, 0, 135);
                     grenadeRb.velocity = new Vector2(-5f, 7f);
                 }
-                
+
             }
         }
     }
@@ -242,6 +245,15 @@ public class PL_Controller : MonoBehaviour
 
     }
 
+    void FlashLight()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            flash.SetActive(!flash.activeSelf);
+        }
+    }
+
+
     public void IvenCloseBtn()
     {
         inventory.SetActive(false);
@@ -249,11 +261,6 @@ public class PL_Controller : MonoBehaviour
 
 
 
-    // 숨기기
-    void InvokeAt()
-    {
-        attackObj.SetActive(false);
-    }
 
     // 게임 오버
     void GameOver()

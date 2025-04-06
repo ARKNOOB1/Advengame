@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
 
     public float time;
 
+    public float grCount;
+
     public bool chestopend = false;
 
     // 인벤토리 변수

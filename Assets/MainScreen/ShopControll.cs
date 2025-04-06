@@ -207,6 +207,7 @@ public class ShopControll : MonoBehaviour
             Item6.color = color;
 
             GameManager.instance.coin -= 200;
+            GameManager.instance.grCount = 2;
             COIN.text = "COIN : " + GameManager.instance.coin;
             Debug.Log("상품을 구매하였습니다.");
         }
